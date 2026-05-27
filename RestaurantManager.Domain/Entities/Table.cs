@@ -1,0 +1,18 @@
+﻿using RestaurantManager.Domain.Enums;
+
+namespace RestaurantManager.Domain.Entities;
+
+public class Table
+{
+    public int Id { get; set; }
+    public int Number { get; set; }
+    public int Capacity { get; set; }
+    public TableStatus Status { get; set; } = TableStatus.Available;
+
+    // FK
+    public int RestaurantId { get; set; }
+    public Restaurant Restaurant { get; set; } = null!;
+
+    // Navegación
+    public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+}
