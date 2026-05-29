@@ -1,6 +1,4 @@
-﻿using RestaurantManager.Domain.Common;
-
-namespace RestaurantManager.Domain.Entities;
+﻿namespace RestaurantManager.Domain.Entities;
 
 public class Order : AuditBase
 {
@@ -10,6 +8,6 @@ public class Order : AuditBase
     public int ReservationId { get; set; }
     public Reservation Reservation { get; set; } = null!;
 
-    // Navegación N:M
+    // Navegation N:M
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

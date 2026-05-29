@@ -1,6 +1,4 @@
-﻿using RestaurantManager.Domain.Common;
-
-namespace RestaurantManager.Domain.Entities;
+﻿namespace RestaurantManager.Domain.Entities;
 
 public class OrderItem : AuditBase
 {

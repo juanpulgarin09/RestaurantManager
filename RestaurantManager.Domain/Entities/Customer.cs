@@ -1,6 +1,4 @@
-﻿using RestaurantManager.Domain.Common;
-
-namespace RestaurantManager.Domain.Entities;
+﻿namespace RestaurantManager.Domain.Entities;
 
 public class Customer : AuditBase
 {
@@ -8,6 +6,6 @@ public class Customer : AuditBase
     public string Email { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
 
-    // Navegación
+    // Navegation Properties
     public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 }

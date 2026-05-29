@@ -1,10 +1,8 @@
-﻿namespace RestaurantManager.Domain.Common;
+﻿namespace RestaurantManager.Domain.Entities;
 
 public abstract class AuditBase
 {
     public int Id { get; set; }
-
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-    public bool IsActive { get; set; } = true; // Borrado lógico (no elimina de la BD)
 }

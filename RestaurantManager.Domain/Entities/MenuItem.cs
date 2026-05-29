@@ -1,5 +1,4 @@
-﻿using RestaurantManager.Domain.Common;
-using RestaurantManager.Domain.Enums;
+﻿using RestaurantManager.Domain.Enums;
 
 namespace RestaurantManager.Domain.Entities;
 
@@ -11,6 +10,6 @@ public class MenuItem : AuditBase
     public MenuCategory Category { get; set; }
     public bool IsAvailable { get; set; } = true;
 
-    // Navegación N:M
+    // Navegation N:M
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

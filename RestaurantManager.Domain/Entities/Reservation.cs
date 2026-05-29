@@ -1,5 +1,4 @@
-﻿using RestaurantManager.Domain.Common;
-using RestaurantManager.Domain.Enums;
+﻿using RestaurantManager.Domain.Enums;
 
 namespace RestaurantManager.Domain.Entities;
 
@@ -17,6 +16,6 @@ public class Reservation : AuditBase
     public int TableId { get; set; }
     public Table Table { get; set; } = null!;
 
-    // Navegación
+    // Navegation Properties
     public Order? Order { get; set; }
 }

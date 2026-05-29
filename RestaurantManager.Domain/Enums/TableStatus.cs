@@ -2,7 +2,7 @@
 
 public enum TableStatus
 {
-    Available,
-    Occupied,
-    Reserved
+    Available = 0,
+    Occupied = 1,
+    Reserved = 2
 }

@@ -1,5 +1,4 @@
-﻿using RestaurantManager.Domain.Common;
-using RestaurantManager.Domain.Enums;
+﻿using RestaurantManager.Domain.Enums;
 
 namespace RestaurantManager.Domain.Entities;
 
@@ -13,6 +12,6 @@ public class Table : AuditBase
     public int RestaurantId { get; set; }
     public Restaurant Restaurant { get; set; } = null!;
 
-    // Navegación
+    // Navegation Properties
     public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 }
