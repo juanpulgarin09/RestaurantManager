@@ -1,10 +1,10 @@
-﻿using RestaurantManager.Domain.Enums;
+﻿using RestaurantManager.Domain.Common;
+using RestaurantManager.Domain.Enums;
 
 namespace RestaurantManager.Domain.Entities;
 
-public class MenuItem
+public class MenuItem : AuditBase
 {
-    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public decimal Price { get; set; }

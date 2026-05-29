@@ -1,8 +1,9 @@
-﻿namespace RestaurantManager.Domain.Entities;
+﻿using RestaurantManager.Domain.Common;
 
-public class Restaurant
+namespace RestaurantManager.Domain.Entities;
+
+public class Restaurant : AuditBase
 {
-    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;

@@ -1,10 +1,10 @@
-﻿using RestaurantManager.Domain.Enums;
+﻿using RestaurantManager.Domain.Common;
+using RestaurantManager.Domain.Enums;
 
 namespace RestaurantManager.Domain.Entities;
 
-public class Table
+public class Table : AuditBase
 {
-    public int Id { get; set; }
     public int Number { get; set; }
     public int Capacity { get; set; }
     public TableStatus Status { get; set; } = TableStatus.Available;

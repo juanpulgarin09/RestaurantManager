@@ -1,10 +1,10 @@
-﻿using RestaurantManager.Domain.Enums;
+﻿using RestaurantManager.Domain.Common;
+using RestaurantManager.Domain.Enums;
 
 namespace RestaurantManager.Domain.Entities;
 
-public class Reservation
+public class Reservation : AuditBase
 {
-    public int Id { get; set; }
     public DateTime ReservationDate { get; set; }
     public int GuestCount { get; set; }
     public ReservationStatus Status { get; set; } = ReservationStatus.Pending;
