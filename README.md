@@ -1,93 +1,93 @@
 # 🍽️ RestaurantManager API
 
-Sistema de gestión de restaurantes desarrollado como **Proyecto Final** de la asignatura **Programación Web** del Instituto Tecnológico Metropolitano (ITM) — 2026.
+Restaurant management system developed as the **Final Project** for the **Web Programming** course at the Instituto Tecnológico Metropolitano (ITM) — 2026.
 
 ---
 
-## 👤 Integrante
+## 👤 Author
 
-| Nombre | GitHub |
-|--------|--------|
+| Name | GitHub |
+|------|--------|
 | Juan Pulgarin | [@juanpulgarin09](https://github.com/juanpulgarin09) |
 
 ---
 
-## 📋 Descripción
+## 📋 Description
 
-**RestaurantManager** es una API REST para la administración completa de un restaurante. Permite gestionar restaurantes, mesas, clientes, ítems del menú y reservas, con validaciones de lógica de negocio reales como disponibilidad de mesas, capacidad máxima por mesa y fechas futuras.
+**RestaurantManager** is a REST API for the complete administration of a restaurant. It allows managing restaurants, tables, customers, menu items, and reservations, with real business logic validations such as table availability, maximum capacity per table, and future dates.
 
-El proyecto aplica los mismos patrones de arquitectura vistos en clase con el proyecto **SportsLeague**, siguiendo una arquitectura N-Layer con separación clara de responsabilidades entre capas.
+The project applies the same architectural patterns covered in class with the **SportsLeague** project, following an N-Layer architecture with a clear separation of responsibilities between layers.
 
 ---
 
-## 🛠️ Tecnologías Usadas
+## 🛠️ Technologies Used
 
 ### Backend
-| Tecnología | Versión | Propósito |
-|-----------|---------|-----------|
-| .NET | 10.0 | Framework principal |
-| C# | — | Lenguaje de programación |
-| ASP.NET Core Web API | 10.0 | Framework para la API REST |
-| Entity Framework Core | 9.0.5 | ORM — Code First con SQL Server |
-| SQL Server | — | Motor de base de datos |
-| AutoMapper | 12.0.1 | Mapeo automático entre Entidades y DTOs |
-| Swagger / Swashbuckle | 6.5.0 | Documentación interactiva de la API |
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| .NET | 10.0 | Main framework |
+| C# | — | Programming language |
+| ASP.NET Core Web API | 10.0 | REST API framework |
+| Entity Framework Core | 9.0.5 | ORM — Code First with SQL Server |
+| SQL Server | — | Database engine |
+| AutoMapper | 12.0.1 | Automatic mapping between Entities and DTOs |
+| Swagger / Swashbuckle | 6.5.0 | Interactive API documentation |
 
 ---
 
-## 🏗️ Arquitectura
+## 🏗️ Architecture
 
-La solución sigue una **Arquitectura N-Layer** con tres proyectos independientes, idéntica al proyecto de referencia SportsLeague:
+The solution follows an **N-Layer Architecture** with three independent projects, identical to the SportsLeague reference project:
 
 ```
 RestaurantManager/
-├── RestaurantManager.Domain       → Capa de Dominio (el cerebro)
-├── RestaurantManager.DataAccess   → Capa de Datos (el almacenamiento)
-└── RestaurantManager.API          → Capa de Presentación (la ventana)
+├── RestaurantManager.Domain       → Domain Layer (the brain)
+├── RestaurantManager.DataAccess   → Data Layer (the storage)
+└── RestaurantManager.API          → Presentation Layer (the window)
 ```
 
-### Responsabilidad de cada capa
+### Layer Responsibilities
 
-**RestaurantManager.Domain** — No depende de nadie:
-- `Entities/` — Clases que representan las tablas de la BD, todas heredando de `AuditBase`
-- `Enums/` — Listas de valores fijos (TableStatus, ReservationStatus, MenuCategory)
-- `Interfaces/Repositories/` — Contratos que DataAccess debe implementar
-- `Interfaces/Services/` — Contratos que la capa API consume
-- `Services/` — Lógica de negocio y validaciones
+**RestaurantManager.Domain** — Depends on no one:
+- `Entities/` — Classes representing DB tables, all inheriting from `AuditBase`
+- `Enums/` — Fixed value lists (TableStatus, ReservationStatus, MenuCategory)
+- `Interfaces/Repositories/` — Contracts that DataAccess must implement
+- `Interfaces/Services/` — Contracts consumed by the API layer
+- `Services/` — Business logic and validations
 
-**RestaurantManager.DataAccess** — Depende solo de Domain:
-- `Context/` — Configuración de EF Core y relaciones entre entidades
-- `Repositories/` — Implementaciones concretas que hablan con SQL Server
-- `Seeders/` — Datos iniciales automáticos al arrancar
-- `Migrations/` — Historial de cambios de la base de datos
+**RestaurantManager.DataAccess** — Depends only on Domain:
+- `Context/` — EF Core configuration and entity relationships
+- `Repositories/` — Concrete implementations that communicate with SQL Server
+- `Seeders/` — Automatic initial data loaded on startup
+- `Migrations/` — Database change history
 
-**RestaurantManager.API** — Depende de Domain y DataAccess:
-- `Controllers/` — Reciben peticiones HTTP y devuelven JSON
-- `DTOs/Request/` — Definen qué datos entran a la API
-- `DTOs/Response/` — Definen qué datos devuelve la API
-- `Mappings/` — AutoMapper convierte entre DTOs y Entidades
-- `Program.cs` — Configuración e inyección de dependencias
+**RestaurantManager.API** — Depends on Domain and DataAccess:
+- `Controllers/` — Receive HTTP requests and return JSON
+- `DTOs/Request/` — Define what data enters the API
+- `DTOs/Response/` — Define what data the API returns
+- `Mappings/` — AutoMapper converts between DTOs and Entities
+- `Program.cs` — Configuration and dependency injection
 
 ---
 
-## 🗄️ Modelo de Datos
+## 🗄️ Data Model
 
-### Entidades (8 tablas)
+### Entities (8 tables)
 
-| Entidad | Descripción |
-|---------|-------------|
-| `Restaurant` | Datos del restaurante (nombre, dirección, teléfono, email) |
-| `Table` | Mesas con número, capacidad y estado |
-| `Customer` | Clientes con nombre, email único y teléfono |
-| `MenuItem` | Ítems del menú con nombre, precio y categoría |
-| `Reservation` | Reservas que vinculan un cliente con una mesa |
-| `Order` | Pedido asociado a una reserva (1:1) |
-| `OrderItem` | Tabla intermedia de la relación N:M entre Order y MenuItem |
-| `AuditBase` | Clase base abstracta con Id, CreatedAt y UpdatedAt |
+| Entity | Description |
+|--------|-------------|
+| `Restaurant` | Restaurant data (name, address, phone, email) |
+| `Table` | Tables with number, capacity, and status |
+| `Customer` | Customers with name, unique email, and phone |
+| `MenuItem` | Menu items with name, price, and category |
+| `Reservation` | Reservations linking a customer to a table |
+| `Order` | Order associated with a reservation (1:1) |
+| `OrderItem` | Junction table for the N:M relationship between Order and MenuItem |
+| `AuditBase` | Abstract base class with Id, CreatedAt, and UpdatedAt |
 
-### Relaciones
+### Relationships
 
-| Tipo | Descripción |
+| Type | Description |
 |------|-------------|
 | **1:N** | `Restaurant` → `Tables` |
 | **1:N** | `Customer` → `Reservations` |
@@ -105,17 +105,17 @@ MenuCategory:      Starter = 0   | MainCourse = 1 | Dessert = 2  | Beverage = 3
 
 ---
 
-## 🚀 Instrucciones para Ejecutar
+## 🚀 Setup Instructions
 
-### Requisitos previos
+### Prerequisites
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
-- [SQL Server](https://www.microsoft.com/sql-server) (Express, Developer o LocalDB)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) o VS Code
+- [SQL Server](https://www.microsoft.com/sql-server) (Express, Developer, or LocalDB)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) or VS Code
 
 ---
 
-### 1️⃣ Clonar el repositorio
+### 1️⃣ Clone the repository
 
 ```bash
 git clone https://github.com/juanpulgarin09/RestaurantManager.git
@@ -124,9 +124,9 @@ cd RestaurantManager
 
 ---
 
-### 2️⃣ Configurar la cadena de conexión
+### 2️⃣ Configure the connection string
 
-Edita `RestaurantManager.API/appsettings.json`:
+Edit `RestaurantManager.API/appsettings.json`:
 
 ```json
 {
@@ -136,35 +136,35 @@ Edita `RestaurantManager.API/appsettings.json`:
 }
 ```
 
-> Si usas SQL Server Express cambia `localhost` por `localhost\SQLEXPRESS`.
+> If you use SQL Server Express, replace `localhost` with `localhost\SQLEXPRESS`.
 
 ---
 
-### 3️⃣ Aplicar migraciones
+### 3️⃣ Apply migrations
 
-En el **Package Manager Console** de Visual Studio con `RestaurantManager.DataAccess` como proyecto por defecto:
+In the **Package Manager Console** in Visual Studio with `RestaurantManager.DataAccess` as the default project:
 
 ```powershell
 Update-Database -StartupProject RestaurantManager.API
 ```
 
-> Las migraciones ya están incluidas en el repositorio.
+> Migrations are already included in the repository.
 
 ---
 
-### 4️⃣ Ejecutar la aplicación
+### 4️⃣ Run the application
 
-Presiona **F5** en Visual Studio o:
+Press **F5** in Visual Studio or:
 
 ```bash
 dotnet run --project RestaurantManager.API
 ```
 
-> El **DataSeeder** se ejecuta automáticamente y puebla la BD con datos de prueba si está vacía.
+> The **DataSeeder** runs automatically and populates the DB with test data if it is empty.
 
 ---
 
-### 5️⃣ Abrir Swagger
+### 5️⃣ Open Swagger
 
 ```
 https://localhost:7082/swagger
@@ -172,100 +172,100 @@ https://localhost:7082/swagger
 
 ---
 
-## 🌱 DataSeeder — Datos Iniciales
+## 🌱 DataSeeder — Initial Data
 
-| Qué | Cantidad | Detalle |
-|-----|----------|---------|
-| Restaurante | 1 | La Terraza Gourmet — El Poblado, Medellín |
-| Mesas | 8 | Capacidades de 2, 4, 6 y 8 personas |
-| Clientes | 5 | Clientes colombianos de prueba |
-| Ítems del menú | 14 | Starters, platos principales, postres y bebidas |
-| Reservas | 3 | Con estados Confirmed y Pending |
-| Pedido | 1 | Con 4 OrderItems (relación N:M) |
+| What | Count | Detail |
+|------|-------|--------|
+| Restaurant | 1 | La Terraza Gourmet — El Poblado, Medellín |
+| Tables | 8 | Capacities of 2, 4, 6, and 8 people |
+| Customers | 5 | Colombian test customers |
+| Menu Items | 14 | Starters, main courses, desserts, and beverages |
+| Reservations | 3 | With Confirmed and Pending statuses |
+| Order | 1 | With 4 OrderItems (N:M relationship) |
 
-El Seeder solo actúa si la base de datos está vacía.
+The Seeder only acts if the database is empty.
 
 ---
 
-## 📡 Endpoints Disponibles
+## 📡 Available Endpoints
 
 ### Restaurants
-| Método | Ruta | Descripción | HTTP |
-|--------|------|-------------|------|
-| GET | `/api/Restaurants` | Listar restaurantes | 200 |
-| GET | `/api/Restaurants/{id}` | Obtener por ID | 200 / 404 |
-| POST | `/api/Restaurants` | Crear restaurante | 201 / 409 |
-| PUT | `/api/Restaurants/{id}` | Actualizar restaurante | 204 / 404 / 409 |
-| DELETE | `/api/Restaurants/{id}` | Eliminar restaurante | 204 / 404 |
+| Method | Route | Description | HTTP |
+|--------|-------|-------------|------|
+| GET | `/api/Restaurants` | List restaurants | 200 |
+| GET | `/api/Restaurants/{id}` | Get by ID | 200 / 404 |
+| POST | `/api/Restaurants` | Create restaurant | 201 / 409 |
+| PUT | `/api/Restaurants/{id}` | Update restaurant | 204 / 404 / 409 |
+| DELETE | `/api/Restaurants/{id}` | Delete restaurant | 204 / 404 |
 
 ### Tables
-| Método | Ruta | Descripción | HTTP |
-|--------|------|-------------|------|
-| GET | `/api/Tables` | Listar mesas | 200 |
-| GET | `/api/Tables/{id}` | Obtener por ID | 200 / 404 |
-| POST | `/api/Tables` | Crear mesa | 201 / 404 / 409 |
-| PUT | `/api/Tables/{id}` | Actualizar mesa | 204 / 404 |
-| DELETE | `/api/Tables/{id}` | Eliminar mesa | 204 / 404 |
+| Method | Route | Description | HTTP |
+|--------|-------|-------------|------|
+| GET | `/api/Tables` | List tables | 200 |
+| GET | `/api/Tables/{id}` | Get by ID | 200 / 404 |
+| POST | `/api/Tables` | Create table | 201 / 404 / 409 |
+| PUT | `/api/Tables/{id}` | Update table | 204 / 404 |
+| DELETE | `/api/Tables/{id}` | Delete table | 204 / 404 |
 
 ### Customers
-| Método | Ruta | Descripción | HTTP |
-|--------|------|-------------|------|
-| GET | `/api/Customers` | Listar clientes | 200 |
-| GET | `/api/Customers/{id}` | Obtener por ID | 200 / 404 |
-| POST | `/api/Customers` | Crear cliente | 201 / 409 |
-| PUT | `/api/Customers/{id}` | Actualizar cliente | 204 / 404 / 409 |
-| DELETE | `/api/Customers/{id}` | Eliminar cliente | 204 / 404 |
+| Method | Route | Description | HTTP |
+|--------|-------|-------------|------|
+| GET | `/api/Customers` | List customers | 200 |
+| GET | `/api/Customers/{id}` | Get by ID | 200 / 404 |
+| POST | `/api/Customers` | Create customer | 201 / 409 |
+| PUT | `/api/Customers/{id}` | Update customer | 204 / 404 / 409 |
+| DELETE | `/api/Customers/{id}` | Delete customer | 204 / 404 |
 
 ### MenuItems
-| Método | Ruta | Descripción | HTTP |
-|--------|------|-------------|------|
-| GET | `/api/MenuItems` | Listar ítems del menú | 200 |
-| GET | `/api/MenuItems/{id}` | Obtener por ID | 200 / 404 |
-| POST | `/api/MenuItems` | Crear ítem | 201 / 409 |
-| PUT | `/api/MenuItems/{id}` | Actualizar ítem | 204 / 404 / 409 |
-| DELETE | `/api/MenuItems/{id}` | Eliminar ítem | 204 / 404 |
+| Method | Route | Description | HTTP |
+|--------|-------|-------------|------|
+| GET | `/api/MenuItems` | List menu items | 200 |
+| GET | `/api/MenuItems/{id}` | Get by ID | 200 / 404 |
+| POST | `/api/MenuItems` | Create item | 201 / 409 |
+| PUT | `/api/MenuItems/{id}` | Update item | 204 / 404 / 409 |
+| DELETE | `/api/MenuItems/{id}` | Delete item | 204 / 404 |
 
 ### Reservations
-| Método | Ruta | Descripción | HTTP |
-|--------|------|-------------|------|
-| GET | `/api/Reservations` | Listar reservas con detalles | 200 |
-| GET | `/api/Reservations/{id}` | Obtener por ID con detalles | 200 / 404 |
-| POST | `/api/Reservations` | Crear reserva | 201 / 404 / 409 |
-| PUT | `/api/Reservations/{id}` | Actualizar / cancelar reserva | 204 / 404 / 409 |
-| DELETE | `/api/Reservations/{id}` | Eliminar reserva | 204 / 404 |
+| Method | Route | Description | HTTP |
+|--------|-------|-------------|------|
+| GET | `/api/Reservations` | List reservations with details | 200 |
+| GET | `/api/Reservations/{id}` | Get by ID with details | 200 / 404 |
+| POST | `/api/Reservations` | Create reservation | 201 / 404 / 409 |
+| PUT | `/api/Reservations/{id}` | Update / cancel reservation | 204 / 404 / 409 |
+| DELETE | `/api/Reservations/{id}` | Delete reservation | 204 / 404 |
 
 ---
 
-## ✅ Validaciones de Lógica de Negocio
+## ✅ Business Logic Validations
 
 ### Restaurants
-- El nombre debe ser único en el sistema.
+- The name must be unique in the system.
 
 ### Customers
-- El email debe ser único en el sistema.
-- El nombre no puede estar vacío.
+- The email must be unique in the system.
+- The name cannot be empty.
 
 ### MenuItems
-- El nombre es obligatorio.
-- El precio debe ser mayor a 0.
+- The name is required.
+- The price must be greater than 0.
 
 ### Tables
-- La capacidad debe ser mayor a 0.
-- El restaurante al que pertenece debe existir.
+- The capacity must be greater than 0.
+- The restaurant it belongs to must exist.
 
 ### Reservations
-- La fecha de reserva debe ser futura.
-- El número de comensales debe ser mayor a 0.
-- El cliente debe existir.
-- La mesa debe existir.
-- La mesa debe estar en estado `Available`.
-- Los comensales no pueden superar la capacidad de la mesa.
-- Al crear una reserva, la mesa cambia automáticamente a `Reserved`.
-- Al cancelar o completar, la mesa vuelve automáticamente a `Available`.
+- The reservation date must be in the future.
+- The number of guests must be greater than 0.
+- The customer must exist.
+- The table must exist.
+- The table must have `Available` status.
+- The number of guests cannot exceed the table's capacity.
+- When a reservation is created, the table automatically changes to `Reserved`.
+- When cancelled or completed, the table automatically returns to `Available`.
 
 ---
 
-## 📁 Estructura del Repositorio
+## 📁 Repository Structure
 
 ```
 RestaurantManager/
@@ -296,11 +296,11 @@ RestaurantManager/
 
 ---
 
-## 👤 Autor
+## 👤 Author
 
-**Juan Pulgarin**  
-Estudiante de Diseño de Software  
-Instituto Tecnológico Metropolitano — ITM  
-Profesor: Carlos Díaz  
-Semestre 2026-1  
+**Juan Pulgarin**
+Software Design Student
+Instituto Tecnológico Metropolitano — ITM
+Professor: Carlos Díaz
+Semester 2026-1
 GitHub: [@juanpulgarin09](https://github.com/juanpulgarin09)
